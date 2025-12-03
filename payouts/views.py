@@ -27,6 +27,7 @@ class PayoutViewSet(viewsets.ModelViewSet):
     def retry(self, request, pk=None):  # type: ignore[override]
         payout = self.get_object()
         process_payout.delay(payout.id)
-        return Response({"detail": "Payout processing retriggered."}, status=status.HTTP_202_ACCEPTED)
-
-
+        return Response(
+            {"detail": "Payout processing retriggered."},
+            status=status.HTTP_202_ACCEPTED,
+        )

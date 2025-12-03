@@ -19,7 +19,11 @@ def process_payout(self: Any, payout_id: int) -> None:
         with transaction.atomic():
             payout = Payout.objects.select_for_update().get(pk=payout_id)
             if payout.status not in {PayoutStatus.PENDING, PayoutStatus.PROCESSING}:
-                logger.info("Payout %s is already processed with status %s", payout_id, payout.status)
+                logger.info(
+                    "Payout %s is already processed with status %s",
+                    payout_id,
+                    payout.status,
+                )
                 return
 
             payout.status = PayoutStatus.PROCESSING
@@ -39,5 +43,3 @@ def process_payout(self: Any, payout_id: int) -> None:
     except Exception as exc:  # noqa: BLE001
         logger.exception("Error while processing payout %s", payout_id)
         raise self.retry(exc=exc)
-
-

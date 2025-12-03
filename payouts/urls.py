@@ -11,5 +11,3 @@ router.register("payouts", PayoutViewSet, basename="payout")
 urlpatterns = [
     path("", include(router.urls)),
 ]
-
-

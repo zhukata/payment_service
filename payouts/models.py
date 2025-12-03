@@ -29,5 +29,3 @@ class Payout(models.Model):
 
     def __str__(self) -> str:
         return f"Payout #{self.pk} {self.amount} {self.currency} -> {self.recipient_account}"
-
-

@@ -30,7 +30,9 @@ class PayoutSerializer(serializers.ModelSerializer):
 
     def validate_currency(self, value: str) -> str:
         if len(value) != 3 or not value.isalpha():
-            raise serializers.ValidationError("Currency must be a 3-letter code (e.g. USD).")
+            raise serializers.ValidationError(
+                "Currency must be a 3-letter code (e.g. USD)."
+            )
         return value.upper()
 
     def validate(self, attrs: dict) -> dict:
@@ -47,5 +49,3 @@ class PayoutStatusUpdateSerializer(serializers.ModelSerializer):
         if value not in PayoutStatus.values:
             raise serializers.ValidationError("Unsupported status.")
         return value
-
-
