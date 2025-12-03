@@ -103,6 +103,15 @@ docker-compose exec web uv run python manage.py migrate
 
 #### CI (GitHub Actions)
 
+- **Платформа**: GitHub Actions, workflow лежит в `.github/workflows/ci.yml`.
+- **Что делает пайплайн**:
+  - поднимает сервисы **PostgreSQL 16** и **Redis 7** как сервис-контейнеры;
+  - устанавливает Python 3.12 и менеджер пакетов `uv`;
+  - ставит зависимости проекта и dev-зависимости (ruff, black) через `uv sync --all-extras --dev`;
+  - выполняет миграции: `uv run python manage.py migrate --noinput`;
+  - запускает тесты: `uv run python manage.py test`;
+  - запускает линтеры: `uv run ruff check .`;
+  - проверяет форматирование: `uv run black --check .`.
 
 #### Описание деплоя (production)
 
@@ -119,4 +128,9 @@ docker-compose exec web uv run python manage.py migrate
   - прогнать миграции;
   - запустить web-приложение и worker-ы;
   - настроить health-check-и, алерты и резервное копирование БД.
+
+#### Скриншоты
+
+- Скриншоты работы API (GET/POST/PATCH и т.д.) находятся в директории `screenshots/`
+
 
